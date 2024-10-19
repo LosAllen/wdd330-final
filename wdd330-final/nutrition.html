@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutritional Information</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Verdana&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="meal-planner.html">Meal Planner</a></li>
+                <li><a href="nutrition.html">Nutritional Info</a></li>
+                <li><a href="favorites.html">Favorite Foods</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Nutritional Information</h1>
+        <form id="nutrition-form">
+            <label for="food-item">Enter a food item:</label>
+            <input type="text" id="food-item" name="food-item">
+            <button type="submit">Get Nutrition Info</button>
+        </form>
+        <div id="nutrition-results"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Meal Planner</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
