@@ -2,18 +2,27 @@ document.getElementById('nutrition-form').addEventListener('submit', function(e)
     e.preventDefault();
 
     const foodItem = document.getElementById('food-item').value;
-    const apiKey = 'YOUR_API_KEY'; // Get from Nutritionix
-    const apiUrl = `https://api.nutritionix.com/v1_1/search/${foodItem}?results=0:1&fields=item_name,nf_calories&appId=YOUR_APP_ID&appKey=${apiKey}`;
+    const apiKey = '77cb904adcc5424c8f35fd881fdba26c';  // Replace with your Spoonacular API Key
+    const apiUrl = `https://api.spoonacular.com/food/products/search?query=${foodItem}&apiKey=${apiKey}`;
 
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            const result = data.hits[0];
-            const nutritionInfo = `
-                <h2>${result.fields.item_name}</h2>
-                <p>Calories: ${result.fields.nf_calories}</p>
-            `;
-            document.getElementById('nutrition-results').innerHTML = nutritionInfo;
+            if (data.products && data.products.length > 0) {
+                const product = data.products[0];
+                const nutritionInfo = `
+                    <h2>${product.title}</h2>
+                    <img src="${product.image}" alt="${product.title}" style="width:100px; height:100px;">
+                    <p>Brand: ${product.brand}</p>
+                    <p>Calories: ${product.nutrition ? product.nutrition.calories : 'N/A'}</p>
+                `;
+                document.getElementById('nutrition-results').innerHTML = nutritionInfo;
+            } else {
+                document.getElementById('nutrition-results').innerHTML = "<p>No results found. Please try a different food item.</p>";
+            }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('nutrition-results').innerHTML = "<p>An error occurred. Please try again later.</p>";
+        });
 });
