@@ -2,7 +2,7 @@ document.getElementById('nutrition-form').addEventListener('submit', function(e)
     e.preventDefault();
 
     const foodItem = document.getElementById('food-item').value;
-    const apiKey = '77cb904adcc5424c8f35fd881fdba26c';  // Replace with your Spoonacular API Key
+    const apiKey = '77cb904adcc5424c8f35fd881fdba26c';
     const apiUrl = `https://api.spoonacular.com/food/products/search?query=${foodItem}&apiKey=${apiKey}`;
 
     fetch(apiUrl)

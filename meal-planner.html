@@ -20,12 +20,159 @@
     </header>
 
     <main>
-        <h1>Meal Planner</h1>
-        <p>Plan your meals here.</p>
+        <h1>Weekly Meal Planner</h1>
+        
+        <!-- Card-Style Meal Creation Form -->
+        <div id="card-creation-section" class="meal-card">
+            <h2>Create a New Meal</h2>
+            <input type="text" id="meal-title" placeholder="Enter meal title">
+            <textarea id="meal-description" placeholder="Enter meal description"></textarea>
+            <select id="meal-day">
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+            </select>
+            <select id="meal-type">
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+            </select>
+            <button onclick="createNewCard()">Add Meal</button>
+        </div>
+
+        <!-- Calendar with Day Containers -->
+        <div id="calendar">
+            <!-- Sunday -->
+            <div class="day" data-day="Sunday">
+                <h2>Sunday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Sunday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Sunday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Sunday-dinner"></div>
+                </div>
+            </div>
+
+            <!-- Monday -->
+            <div class="day" data-day="Monday">
+                <h2>Monday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Monday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Monday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Monday-dinner"></div>
+                </div>
+            </div>
+
+            <!-- Repeat the pattern for the rest of the days... -->
+
+            <!-- Tuesday -->
+            <div class="day" data-day="Tuesday">
+                <h2>Tuesday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Tuesday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Tuesday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Tuesday-dinner"></div>
+                </div>
+            </div>
+
+            <!-- Wednesday -->
+            <div class="day" data-day="Wednesday">
+                <h2>Wednesday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Wednesday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Wednesday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Wednesday-dinner"></div>
+                </div>
+            </div>
+
+            <!-- Thursday -->
+            <div class="day" data-day="Thursday">
+                <h2>Thursday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Thursday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Thursday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Thursday-dinner"></div>
+                </div>
+            </div>
+
+            <!-- Friday -->
+            <div class="day" data-day="Friday">
+                <h2>Friday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Friday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Friday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Friday-dinner"></div>
+                </div>
+            </div>
+
+            <!-- Saturday -->
+            <div class="day" data-day="Saturday">
+                <h2>Saturday</h2>
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <div class="meals" id="Saturday-breakfast"></div>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <div class="meals" id="Saturday-lunch"></div>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <div class="meals" id="Saturday-dinner"></div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2024 Meal Planner</p>
     </footer>
+
+    <script src="js/meal-planner.js"></script>
 </body>
 </html>

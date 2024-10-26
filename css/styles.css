@@ -1,16 +1,17 @@
 /* General Body Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Verdana', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F5F5F5;
+    background-color: #F5F5F5; /* Neutral background */
 }
 
+/* Header Styles */
 header {
-    background-color: #6CAE75;
+    background-color: #6CAE75; /* Primary color */
     color: white;
     padding: 10px 0;
-    font-family: 'Georgia', serif; 
+    font-family: 'Georgia', serif;
 }
 
 header nav ul {
@@ -30,7 +31,10 @@ header nav ul li a {
     font-weight: bold;
 }
 
+/* Main Content Styles */
 main {
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 20px;
     text-align: center;
     font-family: 'Verdana', sans-serif;
@@ -38,47 +42,89 @@ main {
 
 h1 {
     color: #8B9474;
-    font-family: 'Courier New', monospace; 
+    font-family: 'Courier New', monospace;
 }
 
-button, input[type="submit"] {
-    background-color: #F5A65B;
+/* Calendar and Card Styles */
+#calendar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.day {
+    background-color: #C1CC99; 
+    padding: 10px;
+    border-radius: 8px;
+    width: 20%;
+    min-height: 200px;
+    border: 1px solid #8B9474;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+}
+
+/* Meal Card Styles */
+.meal-card {
+    background-color: #F5A65B; /* Accent color */
+    border: 1px solid #8B9474;
+    border-radius: 10%;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: move;
+}
+
+.meal-card input[type="text"], .meal-card textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.meal-card button {
+    background-color: #8BBD8B; /* Button color */
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 5px 10px;
+    margin-top: 5px;
     cursor: pointer;
-    font-family: 'Verdana', sans-serif;
+    border-radius: 5px;
 }
 
-input[type="text"] {
-    padding: 10px;
-    border: 1px solid #C1CC99;
-    border-radius: 4px;
+#card-creation-section {
+    background-color: #F5A65B; /* Match the meal card color */
+    border: 1px solid #8B9474;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto; /* Center the card on the page */
 }
 
+.highlight {
+    border: 2px dashed #6CAE75;
+}
+
+/* Footer Styles */
 footer {
-    background-color: #8BBD8B;
+    background-color: #8BBD8B; 
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
     font-family: 'Georgia', serif;
+    margin-top: 300px;
 }
 
+/* Mobile View Adjustments */
 @media (max-width: 768px) {
-    header nav ul li {
-        display: block;
-        margin-bottom: 10px;
+    #calendar {
+        flex-direction: column; /* Stack days vertically on small screens */
     }
 
     main {
         padding: 10px;
     }
 
-    button, input[type="submit"] {
-        width: 100%;
-        padding: 15px;
+    .meal-card {
+        margin: 5px 0;
     }
 }
