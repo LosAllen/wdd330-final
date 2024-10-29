@@ -1,98 +1,112 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadMeals();
+    setupDropZones();
 });
 
 function createNewCard() {
-    const mealTitle = document.getElementById('meal-title').value;
-    const mealDescription = document.getElementById('meal-description').value;
-    const selectedDay = document.getElementById('meal-day').value;
-    const selectedMealType = document.getElementById('meal-type').value;
+    const title = document.getElementById('meal-title').value;
+    const description = document.getElementById('meal-description').value;
+    const day = document.getElementById('meal-day').value;
+    const mealType = document.getElementById('meal-type').value;
 
-    if (mealTitle.trim() === "" || mealDescription.trim() === "") {
-        alert("Please fill out both the meal title and description.");
+    if (title === "" || description === "") {
+        alert("Please fill in both title and description.");
         return;
     }
 
     const mealCard = document.createElement('div');
     mealCard.className = 'meal-card';
-    mealCard.innerHTML = `<strong>${mealTitle}</strong><p>${mealDescription}</p>`;
+    mealCard.draggable = true;  // Make the card draggable
+    mealCard.innerHTML = `<strong>${title}</strong><p>${description}</p>`;
+    mealCard.id = `meal-${Date.now()}`; // Unique ID for each card
 
-    // Add delete button
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.className = 'delete-btn';
-    deleteButton.onclick = () => deleteMealCard(mealCard, selectedDay, selectedMealType);
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = () => deleteMealCard(mealCard);
     mealCard.appendChild(deleteButton);
 
-    // Find the correct section for the selected day and meal type
-    const targetSection = document.getElementById(`${selectedDay}-${selectedMealType}`);
-    if (targetSection) {
-        targetSection.appendChild(mealCard);
-        saveToLocalStorage();
-    } else {
-        alert("Error: Unable to find the selected meal section.");
-    }
+    // Add drag event listeners to the card
+    setupDraggableCard(mealCard);
 
-    // Clear input fields
-    document.getElementById('meal-title').value = '';
-    document.getElementById('meal-description').value = '';
+    document.getElementById(`${day}-${mealType}`).appendChild(mealCard);
+    saveToLocalStorage();
 }
 
-function deleteMealCard(mealCard, day, mealType) {
-    mealCard.remove();
+function setupDraggableCard(mealCard) {
+    mealCard.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', e.target.id);
+    });
+}
+
+function setupDropZones() {
+    const days = document.querySelectorAll('.day .meal-section');
+
+    days.forEach(daySection => {
+        // Highlight on dragover
+        daySection.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Allow dropping
+            daySection.classList.add('highlight-dropzone'); // Add highlight
+        });
+
+        // Remove highlight when leaving the drop zone
+        daySection.addEventListener('dragleave', () => {
+            daySection.classList.remove('highlight-dropzone');
+        });
+
+        daySection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            daySection.classList.remove('highlight-dropzone'); // Remove highlight on drop
+            const mealCardId = e.dataTransfer.getData('text/plain');
+            const draggedCard = document.getElementById(mealCardId);
+            if (draggedCard) {
+                daySection.appendChild(draggedCard);
+                saveToLocalStorage();
+            }
+        });
+    });
+}
+
+
+function deleteMealCard(card) {
+    card.remove();
     saveToLocalStorage();
 }
 
 function saveToLocalStorage() {
     const data = {};
-    const days = document.querySelectorAll('.day');
-
-    days.forEach(dayDiv => {
-        const day = dayDiv.getAttribute('data-day');
-        const mealSections = dayDiv.querySelectorAll('.meal-section');
-
+    document.querySelectorAll('.day').forEach(dayDiv => {
+        const day = dayDiv.dataset.day;
         data[day] = {};
-
-        mealSections.forEach(section => {
-            const mealType = section.getAttribute('data-meal');
-            const meals = Array.from(section.querySelectorAll('.meal-card')).map(card => {
-                return {
-                    title: card.querySelector('strong').textContent,
-                    description: card.querySelector('p').textContent
-                };
-            });
+        dayDiv.querySelectorAll('.meal-section').forEach(section => {
+            const mealType = section.dataset.meal;
+            const meals = Array.from(section.querySelectorAll('.meal-card')).map(card => ({
+                title: card.querySelector('strong').textContent,
+                description: card.querySelector('p').textContent
+            }));
             data[day][mealType] = meals;
         });
     });
-
     localStorage.setItem('mealPlannerData', JSON.stringify(data));
 }
 
 function loadMeals() {
     const storedData = JSON.parse(localStorage.getItem('mealPlannerData')) || {};
-
     Object.keys(storedData).forEach(day => {
-        const mealData = storedData[day];
-
-        Object.keys(mealData).forEach(mealType => {
-            const meals = mealData[mealType];
-
-            meals.forEach(meal => {
+        Object.keys(storedData[day]).forEach(mealType => {
+            storedData[day][mealType].forEach(meal => {
                 const mealCard = document.createElement('div');
                 mealCard.className = 'meal-card';
+                mealCard.draggable = true;
+                mealCard.id = `meal-${Date.now()}`;
                 mealCard.innerHTML = `<strong>${meal.title}</strong><p>${meal.description}</p>`;
 
-                // Add delete button
                 const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.className = 'delete-btn';
-                deleteButton.onclick = () => deleteMealCard(mealCard, day, mealType);
+                deleteButton.textContent = "Delete";
+                deleteButton.onclick = () => deleteMealCard(mealCard);
                 mealCard.appendChild(deleteButton);
 
-                const targetSection = document.getElementById(`${day}-${mealType}`);
-                if (targetSection) {
-                    targetSection.appendChild(mealCard);
-                }
+                document.getElementById(`${day}-${mealType}`).appendChild(mealCard);
+                setupDraggableCard(mealCard);
             });
         });
     });
